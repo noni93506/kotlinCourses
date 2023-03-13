@@ -2,40 +2,33 @@ package com.example.fragments
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        private const val TAG = "MainActivity"
-    }
+    lateinit var trueButton:Button
+    lateinit var falseButton:Button
+    lateinit var questionText:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager= LinearLayoutManager(this)
-        recyclerView.adapter= CustomRecyclerAdapter(fillList())
+        trueButton = findViewById(R.id.true_button)
+        falseButton = findViewById(R.id.false_button)
+        questionText = findViewById(R.id.question_textview)
+        trueButton.setOnClickListener {
+            Toast.makeText(this,R.string.correct_toast, Toast.LENGTH_SHORT)
+                .show()
+        }
+        falseButton.setOnClickListener {
+            Toast.makeText(this,R.string.incorrect_toast, Toast.LENGTH_SHORT)
+                .show()
+        }
 
-        Log.d(TAG, "onCreate")
-    }
-    private fun fillList(): List<String> {
-        val data = mutableListOf<String>()
-        (1..45).forEach { i -> data.add("$i element") }
-        return data
-    }
-    override fun onStart() {
-        super.onStart()
 
-        Log.d(TAG, "onStart")
     }
 
-    override fun onResume() {
-        super.onResume()
 
-        Log.d(TAG, "onResume")
-    }
 }
 
