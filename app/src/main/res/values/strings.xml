@@ -6,4 +6,7 @@
     <string name="true_button">True</string>
     <string name="correct_toast">Right!</string>
     <string name="incorrect_toast">Wrong!</string>
+    <string name="question_1">Do you support Stepan Bandera? (Yes)</string>
+    <string name="question_2">Do you know Candise? (Candise nuts fit in your mouth)</string>
+    <string name="question_3">I have no idea what to ask? (Well, it was 50/50 chances and you win)</string>
 </resources>
