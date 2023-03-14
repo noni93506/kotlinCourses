@@ -40,12 +40,23 @@
                 style="?android:attr/buttonBarButtonStyle" />
 
         </LinearLayout>
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
         <Button
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:text="@string/next" />
+        <Button
+            android:id="@+id/answer_button"
+            android:layout_width="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/show_answer"
+            android:layout_height="wrap_content"/>
+</LinearLayout>
+
     </LinearLayout>
 
 

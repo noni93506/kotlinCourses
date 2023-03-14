@@ -1,12 +1,21 @@
 <resources>
     <string name="app_name">fragments</string>
     <string name="button">Button</string>
-    <string name="next">Next</string>
     <string name="false_button">False</string>
     <string name="true_button">True</string>
     <string name="correct_toast">Right!</string>
     <string name="incorrect_toast">Wrong!</string>
-    <string name="question_1">Do you support Stepan Bandera? (Yes)</string>
-    <string name="question_2">Do you know Candise? (Candise nuts fit in your mouth)</string>
-    <string name="question_3">I have no idea what to ask? (Well, it was 50/50 chances and you win)</string>
+    <string name="question_1">Do you support Stepan Bandera?</string>
+    <string name="question_2">Do you know Candise? </string>
+    <string name="question_3">I have no idea what to ask? </string>
+    <string name="next">Next</string>
+    <string name="show_answer">show answer</string>
+    <string name="return_to_quiz">Return to quiz</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string-array name="answers">
+        <item>Lol you really need to watch answer ?</item>
+        <item>Candise nuts fit in your mouth</item>
+        <item>Well, it was 50/50 chances and you can\'t do it lol</item>
+
+    </string-array>
 </resources>
