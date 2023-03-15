@@ -2,9 +2,13 @@ package com.example.fragments
 
 import android.content.Context
 import android.graphics.Canvas
+import android.Manifest
 import android.graphics.Color
 import android.graphics.Paint
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
+import androidx.core.app.ActivityCompat
 
 class CustomView(context: Context?) : View(context) {
 
@@ -16,7 +20,13 @@ class CustomView(context: Context?) : View(context) {
         markingPaint.strokeWidth = 10.0f // толщина окантовки
     }
     private val margin = 15F
-
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        super.onTouchEvent(event)
+        val locationPermission = Manifest.permission.BATTERY_STATS
+        val hasPermission = ActivityCompat.checkSelfPermission(context, locationPermission)
+        Log.d("view", "pressed")
+        return true
+    }
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawColor(Color.GREEN)
@@ -41,5 +51,7 @@ class CustomView(context: Context?) : View(context) {
             right - margin , bottom - this.height/2f,
             markingPaint
         )
+        canvas.drawCircle(this.width/2f,this.height/2f, 25.0F, markingPaint )
+
     }
 }
