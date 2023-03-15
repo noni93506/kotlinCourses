@@ -11,9 +11,9 @@ class CustomView(context: Context?) : View(context) {
     private val markingPaint = Paint()
 
     init {
-        markingPaint.color = Color.WHITE // цвет разметки
-        markingPaint.style = Paint.Style.STROKE // обводка вместо сплошной заливки
-        markingPaint.strokeWidth = 10.0f // толщина окантовки
+        markingPaint.color = Color.WHITE
+        markingPaint.style = Paint.Style.STROKE
+        markingPaint.strokeWidth = 10.0f
     }
     private val margin = 15F
 
