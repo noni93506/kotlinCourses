@@ -1,41 +1,43 @@
 package com.example.fragments
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.provider.MediaStore.Images.Media
+import android.widget.Button
+import android.widget.ImageView
 
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        private const val TAG = "MainActivity"
-    }
+    private val REQUEST_IMAGE = 1
+   private lateinit var imageView:ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager= LinearLayoutManager(this)
-        recyclerView.adapter= CustomRecyclerAdapter(fillList())
-
-        Log.d(TAG, "onCreate")
-    }
-    private fun fillList(): List<String> {
-        val data = mutableListOf<String>()
-        (1..45).forEach { i -> data.add("$i element") }
-        return data
-    }
-    override fun onStart() {
-        super.onStart()
-
-        Log.d(TAG, "onStart")
+         imageView =findViewById(R.id.imageView)
+        val button: Button = findViewById(R.id.button)
+        button.setOnClickListener {
+            val intent = Intent(
+                Intent.ACTION_PICK,
+               Media.EXTERNAL_CONTENT_URI
+            )
+            intent.type = "image/*"
+            startActivityForResult(intent, REQUEST_IMAGE)
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-        Log.d(TAG, "onResume")
+        when (requestCode) {
+            REQUEST_IMAGE -> if (resultCode === RESULT_OK) {
+                val selectedImageUri: Uri? = data?.data
+                imageView.setImageURI(selectedImageUri)
+            }
+        }
     }
+
 }
 
