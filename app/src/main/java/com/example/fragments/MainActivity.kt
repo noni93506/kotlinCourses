@@ -1,124 +1,78 @@
 package com.example.fragments
+import android.app.Activity
 import android.content.Intent
-import android.database.Cursor
-import android.graphics.BitmapFactory
-import android.net.Uri
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
-import android.view.View
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.loader.content.CursorLoader
-import java.io.File
-import java.io.FileNotFoundException
+import pl.aprilapps.easyphotopicker.ChooserType
+import pl.aprilapps.easyphotopicker.EasyImage
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var path1TextView: TextView
-    private lateinit var path2TextView: TextView
-    private lateinit var path3TextView: TextView
-    private lateinit var noteTextView: TextView
     private lateinit var imageView: ImageView
-    private lateinit var originalUri: Uri
-    private lateinit var fromPathUri: Uri
-    private lateinit var convertedPath: String
+    private val easyImage = EasyImage.Builder(this)
+        .setChooserType(ChooserType.CAMERA_AND_GALLERY)
+        .allowMultiple(false)
+        .build()
+    companion object {
+        const val PICK_IMAGE_REQUEST_CODE = 1
+    }
+
+    private val pickImageLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        var galleryBitmap: Bitmap? = null
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data
+            try {
+                galleryBitmap = MediaStore.Images.Media.getBitmap(
+                    contentResolver,
+                    data?.data
+                )
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            imageView.setImageBitmap(galleryBitmap)
+            Log.d("data", data.toString())
+        }
+    }
+
+
+
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val button = findViewById<Button>(R.id.button)
-        path1TextView = findViewById(R.id.textView1)
-        path2TextView = findViewById(R.id.textView2)
-        path3TextView = findViewById(R.id.textView3)
-        noteTextView = findViewById(R.id.textViewNote)
-        imageView = findViewById(R.id.imageView)
+        val button = findViewById<Button>(R.id.mainImagePickButton)
+        path1TextView = findViewById(R.id.mainPathTextView)
+
+        imageView = findViewById(R.id.mainImageView)
+
+
         button.setOnClickListener {
-            val intent = Intent(
-                Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            )
-            intent.type = "image/*"
-            startActivityForResult(intent, 0)
-        }
-        path1TextView.setOnClickListener(View.OnClickListener {
-            imageView.setImageBitmap(null)
-            noteTextView.text = "через Uri"
-            try {
-                val bitmap = BitmapFactory.decodeStream(
-                    contentResolver
-                        .openInputStream(originalUri)
-                )
-                imageView.setImageBitmap(bitmap)
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-            }
-        })
-        path2TextView.setOnClickListener(View.OnClickListener {
-            imageView.setImageBitmap(null)
-            noteTextView.text = "через реальный путь"
-            val bitmap = BitmapFactory.decodeFile(convertedPath)
-            imageView.setImageBitmap(bitmap)
-        })
-        path3TextView.setOnClickListener(View.OnClickListener {
-            imageView.setImageBitmap(null)
-            noteTextView.text = "через Back Uri"
-            try {
-                val bitmap = BitmapFactory.decodeStream(
-                    contentResolver
-                        .openInputStream(fromPathUri)
-                )
-                imageView.setImageBitmap(bitmap)
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-            }
-        })
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            imageView.setImageBitmap(null)
-            noteTextView.text = ""
-
-            // Uri return from external activity
-            if(data!=null) {
-                originalUri = data.data!!
-                path1TextView.text = """
-                Uri: $originalUri
-                
-                """.trimIndent()
-            }
-
-            // path converted from Uri
-            convertedPath = getRealPathFromURI(originalUri).toString()
-            path2TextView.text = "Путь к картинке: $convertedPath\n"
-
-            // Uri convert back again from path
-            fromPathUri = Uri.fromFile(File(convertedPath))
-            path3TextView.text = """
-                Back Uri: $fromPathUri
-                
-                """.trimIndent()
+            actionPick()
         }
     }
 
-    fun getRealPathFromURI(contentUri: Uri?): String? {
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
-        var result: String? = null
-        val cursorLoader = CursorLoader(
-            this, contentUri!!, proj,
-            null, null, null
-        )
-        val cursor: Cursor? = cursorLoader.loadInBackground()
-        if (cursor != null) {
-            val columnIndex: Int = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            cursor.moveToFirst()
-            result = cursor.getString(columnIndex)
-        }
-        return result
+
+
+    private fun actionPick() {
+        // Launch the image picker
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+pickImageLauncher.launch(intent)
+
     }
+
 }
