@@ -2,6 +2,8 @@ package com.example.fragments
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -10,21 +12,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import pl.aprilapps.easyphotopicker.ChooserType
-import pl.aprilapps.easyphotopicker.EasyImage
 import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var path1TextView: TextView
     private lateinit var imageView: ImageView
-    private val easyImage = EasyImage.Builder(this)
-        .setChooserType(ChooserType.CAMERA_AND_GALLERY)
-        .allowMultiple(false)
-        .build()
-    companion object {
-        const val PICK_IMAGE_REQUEST_CODE = 1
-    }
 
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -32,13 +25,25 @@ class MainActivity : AppCompatActivity() {
         var galleryBitmap: Bitmap? = null
         if (result.resultCode == Activity.RESULT_OK) {
             val data = result.data
-            try {
-                galleryBitmap = MediaStore.Images.Media.getBitmap(
-                    contentResolver,
-                    data?.data
-                )
-            } catch (e: IOException) {
-                e.printStackTrace()
+            if(data?.data != null) {
+                val imageUrl = data.data
+                try {
+                    galleryBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        Log.d("data", "new")
+                        ImageDecoder.decodeBitmap(
+                            ImageDecoder.createSource(
+                                contentResolver,
+                                imageUrl!!   // cant remove !! but imageUrl cant be null
+                            )
+                        )
+
+                    } else {
+                        Log.d("data","old")
+                        MediaStore.Images.Media.getBitmap(contentResolver, imageUrl)
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
             }
             imageView.setImageBitmap(galleryBitmap)
             Log.d("data", data.toString())
