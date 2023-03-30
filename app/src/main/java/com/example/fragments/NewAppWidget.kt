@@ -6,7 +6,6 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Icon
-import android.os.Build
 import android.widget.RemoteViews
 import android.widget.Toast
 
@@ -45,11 +44,11 @@ internal fun updateAppWidget(
     appWidgetId: Int
 ) {
 
-    // Construct the RemoteViews object
+
     val views = RemoteViews(context.packageName, R.layout.new_app_widget)
-    views.setImageViewIcon(R.id.image , Icon.createWithResource(context , R.mipmap.ic_launcher_foreground))
-    // Instruct the widget manager to update the widget
-    views.setOnClickPendingIntent(R.id.image, getPendingSelfIntent(context, "myButtonClicked"))
+    views.setImageViewIcon(R.id.widgetImageView , Icon.createWithResource(context , R.mipmap.ic_launcher_foreground))
+
+    views.setOnClickPendingIntent(R.id.widgetImageView, getPendingSelfIntent(context, "myButtonClicked"))
 
 
     appWidgetManager.updateAppWidget(appWidgetId, views)
