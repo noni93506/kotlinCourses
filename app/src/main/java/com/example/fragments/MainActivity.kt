@@ -3,6 +3,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -26,24 +27,28 @@ class MainActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val data = result.data
             if(data?.data != null) {
-                val imageUrl = data.data
-                try {
+                val imageUrl = data.data as Uri
+                        try {
                     galleryBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                         Log.d("data", "new")
+                        path1TextView.text = imageUrl.toString()
                         ImageDecoder.decodeBitmap(
                             ImageDecoder.createSource(
                                 contentResolver,
-                                imageUrl!!   // cant remove !! but imageUrl cant be null
+                                imageUrl
                             )
                         )
 
                     } else {
                         Log.d("data","old")
+                        path1TextView.text = imageUrl.toString()
                         MediaStore.Images.Media.getBitmap(contentResolver, imageUrl)
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
+            }else{
+                path1TextView.text = "no url for image"
             }
             imageView.setImageBitmap(galleryBitmap)
             Log.d("data", data.toString())
