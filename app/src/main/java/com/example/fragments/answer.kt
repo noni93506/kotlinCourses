@@ -19,7 +19,7 @@ class AnswerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_answer)
 
-        returnButton = findViewById(R.id.back_to_quiz)
+        returnButton = findViewById(R.id.answerBackToQuizButton)
         returnButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -30,19 +30,23 @@ class AnswerActivity : AppCompatActivity() {
             false
         )
         index = intent.getIntExtra(EXTRA_ANSWER_INDEX, 0)
-        answerTextView = findViewById(R.id.textViewAnswer)
-        showAnswerButton = findViewById(R.id.buttonShowAnswer)
-        showAnswerButton.setOnClickListener(View.OnClickListener { v: View? ->
-            val answers =
-                resources.getStringArray(R.array.answers)
-            if (answerIsTrue) {
-                answerTextView.text = "Yes\n"
-            } else {
-                answerTextView.text = "No\n"
-            }
-            answerTextView.append(answers[index])
+        answerTextView = findViewById(R.id.answerAnswerTextView)
+        showAnswerButton = findViewById(R.id.answerShowAnswerButton)
+        showAnswerButton.setOnClickListener(View.OnClickListener {
+          showAnswer()
         })
 
+    }
+
+    private fun showAnswer() {
+        val answers =
+            resources.getStringArray(R.array.answers)
+        if (answerIsTrue) {
+            answerTextView.text = "Yes\n"
+        } else {
+            answerTextView.text = "No\n"
+        }
+        answerTextView.append(answers[index])
     }
 
     companion object {

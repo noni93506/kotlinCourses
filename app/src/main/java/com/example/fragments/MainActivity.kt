@@ -37,11 +37,12 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState != null) {
             currentIndex = savedInstanceState.getInt(KEY_INDEX, 0)
         }
-        trueButton = findViewById(R.id.true_button)
-        falseButton = findViewById(R.id.false_button)
-        nextButton = findViewById(R.id.next_button)
-        answerButton = findViewById(R.id.answer_button)
-        questionText = findViewById(R.id.question_textview)
+        trueButton = findViewById(R.id.mainTrueButton)
+        falseButton = findViewById(R.id.mainFalseButton)
+        nextButton = findViewById(R.id.mainNextButton)
+        answerButton = findViewById(R.id.mainAnswerButton)
+        questionText = findViewById(R.id.mainQuestionTextview)
+
         trueButton.setOnClickListener {
             checkAnswer(true)
         }
@@ -49,21 +50,23 @@ class MainActivity : AppCompatActivity() {
             checkAnswer(false)
         }
         answerButton.setOnClickListener {
-            val answerIsTrue: Boolean = questions[currentIndex].isCorrectAnswer
-            val intent: Intent = AnswerActivity.sendIntent(
-                this@MainActivity,
-                answerIsTrue, currentIndex
-            )
-            startActivity(intent)
+            goToAnswer()
         }
         val question = questions[currentIndex].textResId
         questionText.setText(question)
-        nextButton = findViewById(R.id.next_button)
         nextButton.setOnClickListener {
-            currentIndex = (currentIndex + 1) % questions.size
-            val question = questions[currentIndex].textResId
-            questionText.setText(question)
+          goToNext()
     }}
+
+    private fun goToAnswer() {
+        val answerIsTrue: Boolean = questions[currentIndex].isCorrectAnswer
+        val intent: Intent = AnswerActivity.sendIntent(
+            this@MainActivity,
+            answerIsTrue, currentIndex
+        )
+        startActivity(intent)
+    }
+
     private fun checkAnswer(rightAnswer: Boolean) {
         val correctAnswer = questions[currentIndex].isCorrectAnswer
         val messageResId = if (rightAnswer == correctAnswer) {
@@ -73,6 +76,11 @@ class MainActivity : AppCompatActivity() {
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
             .show()
+    }
+    private fun goToNext() {
+        currentIndex = (currentIndex + 1) % questions.size
+        val question = questions[currentIndex].textResId
+        questionText.setText(question)
     }
 
 

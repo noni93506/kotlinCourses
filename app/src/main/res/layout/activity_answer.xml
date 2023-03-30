@@ -18,7 +18,7 @@
             android:text="@string/are_you_sure"/>
 
         <TextView
-            android:id="@+id/textViewAnswer"
+            android:id="@+id/answerAnswerTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -26,13 +26,13 @@
             tools:text="Answer"/>
 
         <Button
-            android:id="@+id/buttonShowAnswer"
+            android:id="@+id/answerShowAnswerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/show_answer"/>
         <Button
-            android:id="@+id/back_to_quiz"
+            android:id="@+id/answerBackToQuizButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
