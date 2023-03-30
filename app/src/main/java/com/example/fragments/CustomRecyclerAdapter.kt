@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 class CustomRecyclerAdapter ( private val names: List<String>) : RecyclerView.Adapter<CustomRecyclerAdapter.MyViewHolder>()
 {
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val largeTextView: TextView = itemView.findViewById(R.id.textViewLarge)
-        val smallTextView: TextView = itemView.findViewById(R.id.textViewSmall)
-        val button : ImageButton = itemView.findViewById(R.id.list_button)
+        val largeTextView: TextView = itemView.findViewById(R.id.itemTextViewLarge)
+        val smallTextView: TextView = itemView.findViewById(R.id.itemTextViewSmall)
+        val button : ImageButton = itemView.findViewById(R.id.itemListButton)
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
