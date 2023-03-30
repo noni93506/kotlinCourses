@@ -22,10 +22,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        textView = findViewById(R.id.textViewTime)
-        val startButton  = findViewById<Button >(R.id.buttonStart)
-        val stopButton  = findViewById<Button >(R.id.buttonStop)
-        val resetButton  = findViewById<Button >(R.id.buttonReset)
+        textView = findViewById(R.id.mainTimeTextView)
+        val startButton  = findViewById<Button >(R.id.mainStartButton)
+        val stopButton  = findViewById<Button >(R.id.mainStopButton)
+        val resetButton  = findViewById<Button >(R.id.mainResetButton)
         startButton.setOnClickListener {
             isRunning = true
         }
