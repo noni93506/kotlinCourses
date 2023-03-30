@@ -1,41 +1,42 @@
 package com.example.fragments
 
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.MediaController
+import android.widget.VideoView
+import androidx.appcompat.app.AppCompatActivity
 
 
 class MainActivity : AppCompatActivity() {
+    lateinit var videoView: VideoView
+
     companion object {
         private const val TAG = "MainActivity"
+        private var playing: Boolean = false
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager= LinearLayoutManager(this)
-        recyclerView.adapter= CustomRecyclerAdapter(fillList())
-
+        videoView = findViewById(R.id.mainVideoView)
+        val mediaController = MediaController(this)
+        mediaController.setAnchorView(videoView)
+        videoView.setMediaController(mediaController)
+        val path = "android.resource://" + packageName + "/" + R.raw.vid
+        videoView.setVideoURI(Uri.parse(path))
+        videoView.setOnClickListener {
+                if (playing){
+                    videoView.pause()
+                    playing = !playing
+                }else
+                {
+                    videoView.resume()
+                    playing = !playing
+                }
+        }
         Log.d(TAG, "onCreate")
     }
-    private fun fillList(): List<String> {
-        val data = mutableListOf<String>()
-        (1..45).forEach { i -> data.add("$i element") }
-        return data
-    }
-    override fun onStart() {
-        super.onStart()
 
-        Log.d(TAG, "onStart")
-    }
 
-    override fun onResume() {
-        super.onResume()
-
-        Log.d(TAG, "onResume")
-    }
 }
 
