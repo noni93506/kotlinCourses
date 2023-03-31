@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,4 +8,57 @@
     tools:context=".MainActivity">
 
 
+    <TextView
+        android:id="@+id/mainLevelTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Рівень  "
+        app:layout_constraintBottom_toTopOf="@+id/mainVoltageTextView" />
+
+    <TextView
+        android:id="@+id/mainVoltageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="V:"
+        app:layout_constraintBottom_toTopOf="@+id/mainTemperatureTextView" />
+
+    <TextView
+        android:id="@+id/mainTemperatureTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Температура:"
+        app:layout_constraintBottom_toTopOf="@+id/mainTechnologyTextView"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/mainTechnologyTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Тип:"
+        app:layout_constraintBottom_toTopOf="@+id/mainHealthTextView" />
+
+
+
+    <TextView
+        android:id="@+id/mainHealthTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Стан:"
+        app:layout_constraintBottom_toTopOf="@+id/mainChargeTextView" />
+
+
+
+
+    <TextView
+        android:id="@+id/mainChargeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Тип зарядки:"
+        app:layout_constraintBottom_toTopOf="@+id/mainCapacityTextView" />
+    <TextView
+        android:id="@+id/mainCapacityTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Обʼєм"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
