@@ -1,12 +1,12 @@
 package com.example.fragments.view
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.example.fragments.R
+import com.example.fragments.databinding.ActivityAnimalBinding
 import com.example.fragments.model.Animal
-import com.example.fragments.viewModel.AnimalViewModel
+import com.example.fragments.viewModel.AnimalVM
 
 
 class AnimalActivity : AppCompatActivity() {
@@ -14,27 +14,18 @@ class AnimalActivity : AppCompatActivity() {
         private const val TAG = "AnimalActivity"
     }
 
-    lateinit var animalViewMode : AnimalViewModel
-    lateinit var button:Button
-    lateinit var  textView: TextView
+    lateinit var mBinding :ActivityAnimalBinding
+    lateinit var mViewMode : AnimalVM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_animal)
-        button= findViewById(R.id.animalShoutButton)
-        textView = findViewById(R.id.animalAnimalTextView)
+        mBinding= DataBindingUtil.setContentView(this, R.layout.activity_animal)
         //////model
         val animal= Animal("dog", 0)
         /////ViewModel
-        animalViewMode= AnimalViewModel(animal)
+        mViewMode= AnimalVM(animal)
         ////binding
-       textView.text = animalViewMode.info
-
-        button.setOnClickListener {
-            animalViewMode.shout().also {
-                textView.text= animalViewMode.info
-            }
-        }
+        mBinding.vm=mViewMode
+    }
     }
 
-}
