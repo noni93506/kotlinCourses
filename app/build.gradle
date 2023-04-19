@@ -30,6 +30,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -37,7 +40,20 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
+    // koin core
+    implementation "io.insert-koin:koin-core:3.4.0"
+    // koin android
+    implementation "io.insert-koin:koin-android:3.4.0"
+    // Java Compatibility
+    implementation "io.insert-koin:koin-android-compat:3.4.0"
+    // Jetpack WorkManager
+    implementation "io.insert-koin:koin-androidx-workmanager:3.4.0"
+    // Navigation Graph
+    implementation "io.insert-koin:koin-androidx-navigation:3.4.0"
+    //view binding
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate-full:1.5.9'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'javax.inject:javax.inject:1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
