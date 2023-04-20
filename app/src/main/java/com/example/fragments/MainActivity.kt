@@ -9,7 +9,7 @@ import com.example.fragments.viewModules.UserVM
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
 
     private val binding : ActivityMainBinding  by viewBinding(ActivityMainBinding::bind)
@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         initViews()
     }
 
@@ -30,9 +29,9 @@ class MainActivity : AppCompatActivity() {
             viewModel.addUser()
         }
         binding.mainSearchUserButton.setOnClickListener {
-          binding.mainTextView.text =  viewModel.sayHello()
+           viewModel.sayHello()
         }
-
+        viewModel.userDataMessage.observe(this) { binding.mainTextView.text = it }
     }
 
 

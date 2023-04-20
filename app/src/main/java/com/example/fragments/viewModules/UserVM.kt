@@ -9,13 +9,13 @@ import com.example.fragments.rep.UserRepository
 
 class UserVM(private val repository: UserRepository) : ViewModel() {
     val usernameData = MutableLiveData<String>()
+    val userDataMessage= MutableLiveData<String>();
 
 
-    fun sayHello() : String {
+    fun sayHello() {
         Log.d("sayHello",usernameData.value.toString())
         val foundUser = repository.findUser(usernameData.value.toString())
-       return  foundUser?.let { "Hello '$it' from $this" } ?: "User '${usernameData.value}' not found!"
-
+       userDataMessage.value = foundUser?.let { "Hello '$it' from $this" } ?: "User '${usernameData.value}' not found!"
     }
      fun addUser(){
          Log.d("addUser",usernameData.value.toString())

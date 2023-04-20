@@ -51,3 +51,4 @@ fun EditText.textChanges(listener: (text: CharSequence) -> Unit) {
         }
     })
 }
+
